@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Record Not Found.',
+        'error' => '404'
+    ], 404);
+})->name('404');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
