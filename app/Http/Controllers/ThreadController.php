@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ThreadRequest;
 use App\Http\Requests\ThreadStoreRequest;
 use App\Http\Resources\Thread\ThreadCollection;
 use App\Http\Resources\Thread\ThreadResource;
@@ -49,11 +48,11 @@ class ThreadController extends Controller
      * @param  \App\Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(ThreadRequest $request, Thread $thread)
+    public function update(ThreadStoreRequest $request, Thread $thread)
     {
         $thread->fill($request->all());
         $thread->save();
-        
+
         return new ThreadResource($thread);
     }
 
@@ -65,6 +64,8 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        $thread->delete();
+
+        return response()->json(['Article with id ' . $thread->id . ' has been deleted.']);
     }
 }
